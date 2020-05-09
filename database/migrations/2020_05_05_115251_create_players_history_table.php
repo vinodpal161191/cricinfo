@@ -15,12 +15,12 @@ class CreatePlayersHistoryTable extends Migration
     {
         Schema::create('players_history', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('player_id')->unsigned();
-            $table->integer('matches');
-            $table->integer('run');
-            $table->integer('highest_score');
-            $table->integer('fifties');
-            $table->integer('hundreds');
+            $table->bigInteger('player_id')->nullable()->unsigned();
+            $table->integer('matches')->nullable();
+            $table->integer('run')->nullable();
+            $table->integer('highest_score')->nullable();
+            $table->integer('fifties')->nullable();
+            $table->integer('hundreds')->nullable();
             $table->timestamps();
 
             //FOREIGN KEY CONSTRAINTS

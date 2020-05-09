@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Match;
 
 class Team extends Model
 {
@@ -19,4 +20,11 @@ class Team extends Model
     {
         return $this->hasMany('App\Player');
     }
+
+    public function matchCount($teamId){
+        echo $matchCount = Match::where('team1', '=', $teamId)
+        ->orWhere('team2', '=', $teamId)
+        ->count();
+    }
+
 }

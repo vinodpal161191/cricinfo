@@ -108,6 +108,34 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="matches" class="col-md-4 col-form-label text-md-right">{{ __('Matches') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="matches" type="number" min="0" class="form-control @error('matches') is-invalid @enderror" name="matches" value="{{ $player->playerHistory->matches }}" required autocomplete="matches" autofocus>
+
+                                @error('matches')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="run" class="col-md-4 col-form-label text-md-right">{{ __('Run') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="run" type="number" min="0" class="form-control @error('run') is-invalid @enderror" name="run" value="{{ $player->playerHistory->run }}" required autocomplete="run" autofocus>
+
+                                @error('run')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

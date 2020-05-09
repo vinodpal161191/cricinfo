@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Player;
+use App\PlayerHistory;
 use App\Team;
 use Illuminate\Http\Request;
 use Flash;
@@ -67,6 +68,8 @@ class PlayerController extends Controller
         ]);
 
         $players->save();
+        // dd($players);
+        $this->saveRelated($request, $players);
         return redirect('/players');
     }
 
@@ -89,7 +92,7 @@ class PlayerController extends Controller
      */
     public function edit($id)
     {
-        $player = Player::find($id);
+        $player = Player::with('playerHistory')->find($id);
         $teams = DB::table('teams')->pluck("name","id");
         
         return view('players.edit', compact('player','id','teams'));
@@ -127,6 +130,7 @@ class PlayerController extends Controller
         $player->playerJerseyNumber = $request->get('playerJerseyNumber');
         $player->country = $request->get('country');
         $player->save();
+        $this->saveRelated($request, $player);
         return redirect('/players');
     }
 
@@ -141,5 +145,30 @@ class PlayerController extends Controller
         Player::find($id)->delete();
 
         return redirect(route('players.index'))->with('success','Player entry deleted successfully!');
+    }
+
+    public function saveRelated($request, $players)
+    {
+        $playerHistory = PlayerHistory::where('player_id', $players->id)->get();
+        if($playerHistory->count()>0){
+            PlayerHistory::where('player_id', $players->id)
+            ->update([
+                'matches' => $request->get('matches'),
+                'run'  => $request->get('run'),
+                'highest_score'  => $request->get('highest_score'),
+                'fifties'  => $request->get('fifties'),
+                'hundreds'  => $request->get('hundreds'),
+            ]);
+        }else{
+            $playerHistoryModel = new PlayerHistory();
+            $playerHistoryModel->player_id = $players->id;
+            $playerHistoryModel->matches = $request->get('matches');
+            $playerHistoryModel->run = $request->get('run');
+            $playerHistoryModel->highest_score = $request->get('highest_score');
+            $playerHistoryModel->fifties = $request->get('fifties');
+            $playerHistoryModel->hundreds = $request->get('hundreds');
+            $playerHistoryModel->save();
+        }
+        
     }
 }

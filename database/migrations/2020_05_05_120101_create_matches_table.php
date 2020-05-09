@@ -17,7 +17,7 @@ class CreateMatchesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('team1');
             $table->integer('team2');
-            $table->dateTime('match_date');
+            $table->string('location');
             $table->enum('match_status', array('win', 'loss'));
             $table->timestamps();
         });

@@ -177,6 +177,7 @@ return [
 
         // HTML/Form Service Provider Added //
         Collective\Html\HtmlServiceProvider::class,
+        Kris\LaravelFormBuilder\FormBuilderServiceProvider::class,
 
     ],
 
@@ -231,6 +232,7 @@ return [
         // Form/ HTML Alias Added //
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'FormBuilder' => Kris\LaravelFormBuilder\Facades\FormBuilder::class,
 
     ],
 

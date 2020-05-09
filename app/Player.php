@@ -19,4 +19,9 @@ class Player extends Model
     {
         return $this->belongsTo('App\Team');
     }
+
+    public function playerHistory()
+    {
+        return $this->hasOne('App\PlayerHistory');
+    }
 }

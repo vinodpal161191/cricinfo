@@ -21,6 +21,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => 'auth'], function (){
 	Route::resource('teams', 'TeamController');
 	Route::resource('players', 'PlayerController');
+	Route::resource('matches', 'MatchController');
+	Route::resource('points', 'PointsTableController');
 	Route::get('image-factory/{path}', [
 	    'as' => 'image_factory',
 	    'uses' => 'ImageFactoryController@show'

@@ -50,6 +50,12 @@
                             @endif
                         @else
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('points.index') }}">{{ __('Points Table') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('matches.index') }}">{{ __('Matches') }}</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('players.index') }}">{{ __('Players') }}</a>
                             </li>
                             <li class="nav-item">
