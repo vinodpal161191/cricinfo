@@ -28,10 +28,10 @@
     <tbody>
       @foreach($teams as $team)
       <tr>
-        <td>{{$team['name']}}</td>
+        <td><a href="{{ route('players.index', ['team_id' => $team['id']]) }}">{{$team['name']}}</a></td>
         <td>{{$team['identifier']}}</td>
         <td>@if($team['logoUri'])
-                <img src="<?php echo url('image-factory').'/'.$team['logoUri']; ?>" width="150" height="150">
+                <a href="{{ route('players.index', ['team_id' => $team['id']]) }}"><img src="<?php echo url('image-factory').'/'.$team['logoUri']; ?>" width="150" height="150"></a>
             @endif
         </td>
         <td>{{$team['clubState']}}</td>
@@ -53,5 +53,6 @@
       @endforeach
     </tbody>
   </table>
+  {!! $teams->links() !!}
   </div>
 @endsection

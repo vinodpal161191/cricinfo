@@ -8,6 +8,8 @@ use App\Team;
 use Illuminate\Http\Request;
 use Flash;
 use DB;
+use Menu;
+use App\Http\Requests\PlayerRequest;
 
 class PlayerController extends Controller
 {
@@ -16,10 +18,16 @@ class PlayerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $players = Player::with('team')->get()->toArray();
-        // dd($players);
+        Menu::get('breadcrumbs')->raw('<span>Players</span>')->active();
+        if ($teamId = $request->team_id) {
+            $query = Player::with('team')->where('team_id', '=', $teamId);
+        }else{
+            $query = Player::with('team');
+        }
+        
+        $players = $query->orderBy('players.id', 'DESC')->paginate(10);
         return view('players.index', compact('players'));
     }
 
@@ -40,7 +48,7 @@ class PlayerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PlayerRequest $request)
     {
         $imagePath = '';
         if($image = $request->file('imageUri')){
@@ -105,14 +113,11 @@ class PlayerController extends Controller
      * @param  \App\Player  $player
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PlayerRequest $request, $id)
     {
         
         $player = Player::find($id);
         if($image = $request->file('imageUri')){
-            $this->validate($request, [
-                'imageUri' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ]);
             $destinationPath = storage_path('app/uploads');
             if (!file_exists($destinationPath)) {
                 mkdir($destinationPath, 777, true);

@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Team;
 use Illuminate\Http\Request;
+use App\Http\Requests\TeamRequest;
 use Flash;
+use Menu;
+use Kris\LaravelFormBuilder\FormBuilder;
 
 class TeamController extends Controller
 {
@@ -15,7 +18,8 @@ class TeamController extends Controller
      */
     public function index()
     {
-        $teams = Team::all()->toArray();
+        Menu::get('breadcrumbs')->raw('<span>Teams</span>')->active();
+        $teams = Team::orderBy('id', 'DESC')->paginate(10);
         
         return view('teams.index', compact('teams'));
     }
@@ -25,9 +29,13 @@ class TeamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(FormBuilder $formBuilder)
     {
-        return view('teams.create');
+        $form = $formBuilder->create('App\Form\TeamForm', [
+            'method' => 'POST',
+            'url' => route('teams.store')
+        ]);
+        return view('teams.create', compact('form'));
     }
 
     /**
@@ -36,13 +44,10 @@ class TeamController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TeamRequest $request)
     {
         $imagePath = '';
         if($image = $request->file('logoUri')){
-            $this->validate($request, [
-                'logoUri' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ]);
             $destinationPath = storage_path('app/uploads');
             if (!file_exists($destinationPath)) {
                 mkdir($destinationPath, 777, true);
@@ -81,11 +86,16 @@ class TeamController extends Controller
      * @param  \App\Team  $team
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(FormBuilder $formBuilder, $id)
     {
         $team = Team::find($id);
+        $form = $formBuilder->create('App\Form\TeamForm', [
+            'method' => 'PATCH',
+            'url' => route('teams.update', $team),
+            'model' => $team
+        ]);
         
-        return view('teams.edit', compact('team','id'));
+        return view('teams.edit', compact('team','id','form'));
     }
 
     /**
@@ -95,14 +105,11 @@ class TeamController extends Controller
      * @param  \App\Team  $team
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TeamRequest $request, $id)
     {
 
         $team = Team::find($id);
         if($image = $request->file('logoUri')){
-            $this->validate($request, [
-                'logoUri' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ]);
             $destinationPath = storage_path('app/uploads');
             if (!file_exists($destinationPath)) {
                 mkdir($destinationPath, 777, true);

@@ -15,12 +15,12 @@ class Match extends Model
         'team1', 'team2', 'location', 'match_status',
     ];
 
-    public function team1()
+    public function team1Rel()
     {
         return $this->belongsTo('App\Team', 'team1', 'id');
     }
 
-    public function team2()
+    public function team2Rel()
     {
         return $this->belongsTo('App\Team', 'team2', 'id');
     }

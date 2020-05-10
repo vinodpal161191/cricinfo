@@ -49,18 +49,7 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('points.index') }}">{{ __('Points Table') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('matches.index') }}">{{ __('Matches') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('players.index') }}">{{ __('Players') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('teams.index') }}">{{ __('Teams') }}</a>
-                            </li>
+                            @include(config('laravel-menu.views.bootstrap-items'), array('items' => $clientMenu->roots()))
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -85,6 +74,12 @@
         </nav>
 
         <main class="py-4">
+        <div class="container">
+            <ol class="breadcrumb breadcrumb-arrow">
+            <li class="active"><span class="navbar-text"><span>Home / &nbsp;</span></span></li>
+            @include(config('laravel-menu.views.bootstrap-items'), array('items' => $breadcrumbs->roots()))
+        </ol>
+        </div>
             @yield('content')
         </main>
     </div>

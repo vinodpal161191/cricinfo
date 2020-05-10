@@ -38,7 +38,7 @@
         </td>
         <td>{{$player['playerJerseyNumber']}}</td>
         <td>{{$player['country']}}</td>
-        <td>{{$player['team']['name']}}</td>
+        <td><a href="{{ route('players.index', ['team_id' => $player['team_id']]) }}">{{$player['team']['name']}}</a></td>
         <td><a href="{{ route('players.edit', $player['id']) }}" style="background-color: #4CAF50;border: none;
   color: white;
   padding: 8px 32px;
@@ -57,5 +57,6 @@
       @endforeach
     </tbody>
   </table>
+  {!! $players->links() !!}
   </div>
 @endsection

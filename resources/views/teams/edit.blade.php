@@ -8,14 +8,12 @@
                 <div class="card-header">{{ __('Team') }}</div>
 
                 <div class="card-body">
-                    <form method="post" action="{{ route('teams.update', $id) }}" enctype="multipart/form-data">
-                        {{csrf_field()}}
-                        <input name="_method" type="hidden" value="PATCH">
+                    {!! form_start($form) !!}
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{$team->name}}" required autocomplete="name" autofocus>
+                                {!! form_row($form->name, $options = ['attr' => ['class' => 'form-control'], 'label' => false]); !!}
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -29,7 +27,7 @@
                             <label for="identifier" class="col-md-4 col-form-label text-md-right">{{ __('Identifier') }}</label>
 
                             <div class="col-md-6">
-                                <input id="identifier" type="text" class="form-control @error('identifier') is-invalid @enderror" name="identifier" value="{{ $team->identifier }}" required autocomplete="identifier" autofocus>
+                                {!! form_row($form->identifier, $options = ['attr' => ['class' => 'form-control'], 'label' => false]); !!}
 
                                 @error('identifier')
                                     <span class="invalid-feedback" role="alert">
@@ -43,7 +41,8 @@
                             <label for="logoUri" class="col-md-4 col-form-label text-md-right">{{ __('Logo') }}</label>
 
                             <div class="col-md-6">
-                                {!! Form::file('logoUri', array('class' => 'image')) !!}
+                                <!-- {!! Form::file('logoUri', array('class' => 'image')) !!} -->
+                                {!! form_row($form->logoUri, $options = ['attr' => ['class' => 'form-control'], 'label' => false]) !!}
                                 @if($team['logoUri'])
                                     <img src="<?php echo url('image-factory').'/'.$team['logoUri']; ?>" width="150" height="150">
                                 @endif
@@ -54,7 +53,7 @@
                             <label for="clubState" class="col-md-4 col-form-label text-md-right">{{ __('Club State') }}</label>
 
                             <div class="col-md-6">
-                                <input id="clubState" type="text" class="form-control @error('clubState') is-invalid @enderror" name="clubState" value="{{ $team->clubState }}" required autocomplete="clubState" autofocus>
+                                {!! form_row($form->clubState, $options = ['attr' => ['class' => 'form-control'], 'label' => false]); !!}
 
                                 @error('clubState')
                                     <span class="invalid-feedback" role="alert">
@@ -66,12 +65,10 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Update') }}
-                                </button>
+                                {!! form_until($form, 'clear') !!}
+                                {!! form_end($form, false) !!}
                             </div>
                         </div>
-                    </form>
                 </div>
             </div>
         </div>

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Match;
 use Illuminate\Http\Request;
+use App\Http\Requests\MatchRequest;
 use Flash;
 use Kris\LaravelFormBuilder\FormBuilder;
 use DB;
+use Menu;
 
 class MatchController extends Controller
 {
@@ -17,7 +19,10 @@ class MatchController extends Controller
      */
     public function index()
     {
-        $matches = Match::with('team1', 'team2')->get()->toArray();
+        Menu::get('breadcrumbs')->raw('<span>Matches</span>')->active();
+        $query = Match::with('team1Rel', 'team2Rel');
+        $matches = $query->orderBy('matches.id', 'DESC')->paginate(10);
+        // dd($matches);
         return view('matches.index', compact('matches'));
     }
 
@@ -42,7 +47,7 @@ class MatchController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MatchRequest $request)
     {
 
         $matches = new Match([
@@ -93,7 +98,7 @@ class MatchController extends Controller
      * @param  \App\Match  $match
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MatchRequest $request, $id)
     {
 
         $match = Match::find($id);

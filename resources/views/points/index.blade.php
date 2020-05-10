@@ -22,9 +22,9 @@
       @foreach($teams as $team)
       <tr>
         <td>@if($team->logoUri)
-                <img src="<?php echo url('image-factory').'/'.$team->logoUri; ?>" width="30" height="30">
+                <a href="{{ route('players.index', ['team_id' => $team->id]) }}"><img src="<?php echo url('image-factory').'/'.$team->logoUri; ?>" width="30" height="30"></a>
             @endif
-            {{$team->name}}</td>
+            <a href="{{ route('players.index', ['team_id' => $team->id]) }}">{{$team->name}}</a></td>
         <td>{{$teamModel->matchCount($team->id)}}</td>
         <td>{{$team->wins}}</td>
         <td>{{$team->wins*2}}</td>

@@ -178,6 +178,8 @@ return [
         // HTML/Form Service Provider Added //
         Collective\Html\HtmlServiceProvider::class,
         Kris\LaravelFormBuilder\FormBuilderServiceProvider::class,
+        /// added for Menu ////
+        Lavary\Menu\ServiceProvider::class,
 
     ],
 
@@ -233,6 +235,8 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'FormBuilder' => Kris\LaravelFormBuilder\Facades\FormBuilder::class,
+        /// added for menu ///
+        'Menu'      => Lavary\Menu\Facade::class,
 
     ],
 

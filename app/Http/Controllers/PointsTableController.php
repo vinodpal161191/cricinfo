@@ -6,6 +6,7 @@ use App\Team;
 use Illuminate\Http\Request;
 use Flash;
 use DB;
+use Menu;
 
 class PointsTableController extends Controller
 {
@@ -16,6 +17,7 @@ class PointsTableController extends Controller
      */
     public function index()
     {
+        Menu::get('breadcrumbs')->raw('<span>Points Table</span>')->active();
         $teams = Team::all()->toArray();
         $teams = DB::table('teams')
                 ->leftJoin('matches', function($join){ 

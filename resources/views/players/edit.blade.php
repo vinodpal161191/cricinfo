@@ -16,13 +16,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <select name="team_id" class="form-control" style="width:250px">
-                                        <option value="">--- Select Team ---</option>
-                                        @foreach ($teams as $key => $value)
-                                        <option value="{{ $key }}" @if($player->team_id ==$key)
-                                        selected @endif>{{ $value }}</option>
-                                        @endforeach
-                                    </select>
+                                    {!! Form::select('team_id', $teams, $player->team_id, ['class' => 'form-control']) !!}
                                 </div>
                             </div>
                         </div>

@@ -20,18 +20,25 @@
       <tr>
         <th>Team 1</th>
         <th>Opponent Team</th>
+        <th>Winner</th>
         <th>Location</th>
-        <th>Match Status</th>
         <th colspan="2">Action</th>
       </tr>
     </thead>
     <tbody>
       @foreach($matches as $match)
       <tr>
-        <td>{{$match['team1']['name']}}</td>
-        <td>{{$match['team2']['name']}}</td>
+        <td>{{$match['team1Rel']['name']}}</td>
+        <td>{{$match['team2Rel']['name']}}</td>
+        <td>
+        <img src="{{ URL::to('/') }}/images/winner_icon.png" width="20" height="20">
+        @if ($match['match_status'] == 'win')
+          {{$match['team1Rel']['name']}}
+        @else
+          {{$match['team2Rel']['name']}}
+        @endif
+        </td>
         <td>{{$match['location']}}</td>
-        <td>{{$match['match_status']}}</td>
         <td><a href="{{ route('matches.edit', $match['id']) }}" style="background-color: #4CAF50;border: none;
   color: white;
   padding: 8px 32px;
@@ -50,5 +57,6 @@
       @endforeach
     </tbody>
   </table>
+  {!! $matches->links() !!}
   </div>
 @endsection
