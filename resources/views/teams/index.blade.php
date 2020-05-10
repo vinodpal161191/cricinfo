@@ -31,7 +31,7 @@
         <td><a href="{{ route('players.index', ['team_id' => $team['id']]) }}">{{$team['name']}}</a></td>
         <td>{{$team['identifier']}}</td>
         <td>@if($team['logoUri'])
-                <a href="{{ route('players.index', ['team_id' => $team['id']]) }}"><img src="<?php echo url('image-factory').'/'.$team['logoUri']; ?>" width="150" height="150"></a>
+                <a href="{{ route('players.index', ['team_id' => $team['id']]) }}"><img src="<?php echo url('image-factory').'/'.$team['logoUri']; ?>" width="100" height="100"></a>
             @endif
         </td>
         <td>{{$team['clubState']}}</td>
